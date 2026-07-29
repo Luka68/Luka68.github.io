@@ -132,21 +132,6 @@
         .card p { color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
         .card p:last-child { margin-bottom: 0; }
 
-        /* IFRAME per il calcolatore */
-        .iframe-container {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            overflow: hidden;
-            height: 800px;
-        }
-        .iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #15171a;
-        }
-
         /* GALLERIA */
         .gallery-grid {
             display: grid;
@@ -169,11 +154,52 @@
         }
         .gallery-item .icon { font-size: 48px; margin-bottom: 10px; }
 
+        /* PAGINA INTERA PER IL CALCOLATORE */
+        .fullscreen-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background: #15171a;
+        }
+        .fullscreen-page.active {
+            display: block;
+        }
+        .fullscreen-page iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .fullscreen-close {
+            position: fixed;
+            top: 16px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid var(--amber-dim);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .fullscreen-close:hover {
+            background: rgba(255,159,28,0.15);
+            border-color: var(--amber);
+        }
+
         @media (max-width: 640px) {
             .topbar-inner { flex-direction: column; align-items: stretch; }
             nav { justify-content: center; }
-            .iframe-container { height: 600px; }
             .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .fullscreen-close { top: 10px; right: 10px; padding: 8px 14px; font-size: 12px; }
         }
     </style>
 </head>
@@ -189,13 +215,13 @@
         <nav>
             <a href="#" onclick="mostraPagina('home')" class="active">🏠 Home</a>
             <a href="#" onclick="mostraPagina('chi-sono')">👤 Chi sono</a>
-            <a href="#" onclick="mostraPagina('calcolatore')">🔧 Calcolatore CNC</a>
+            <a href="#" onclick="apriCalcolatore()">🔧 Calcolatore CNC</a>
             <a href="#" onclick="mostraPagina('galleria')">🖼️ Galleria</a>
         </nav>
     </div>
 </div>
 
-<!-- CONTENUTO -->
+<!-- CONTENUTO NORMALE -->
 <div class="wrap">
 
     <!-- HOME -->
@@ -216,14 +242,6 @@
             <p>🔧 Mi occupo di programmazione e ottimizzazione dei processi di tornitura e fresatura, con particolare attenzione all'efficienza e alla qualità del pezzo finito.</p>
             <p>📚 Sono sempre alla ricerca di nuovi strumenti e tecniche per migliorare il lavoro in officina.</p>
             <p>📧 Contattami: <strong>lfavaret@gmail.com</strong></p>
-        </div>
-    </div>
-
-    <!-- CALCOLATORE CNC -->
-    <div id="calcolatore" class="page">
-        <div class="page-title">Calcolatore <span>CNC</span></div>
-        <div class="iframe-container">
-            <iframe src="calcolatore-tempi-tornio_3.html"></iframe>
         </div>
     </div>
 
@@ -260,19 +278,37 @@
 
 </div>
 
+<!-- PAGINA INTERA PER IL CALCOLATORE -->
+<div class="fullscreen-page" id="fullscreenCalcolatore">
+    <button class="fullscreen-close" onclick="chiudiCalcolatore()">✕ Chiudi</button>
+    <iframe src="calcolatore-tempi-tornio_3.html"></iframe>
+</div>
+
 <script>
 function mostraPagina(id) {
+    // Nascondi tutte le pagine
     document.querySelectorAll('.page').forEach(function(el) {
         el.classList.remove('active');
     });
     document.getElementById(id).classList.add('active');
 
+    // Aggiorna il menu
     document.querySelectorAll('nav a').forEach(function(el) {
         el.classList.remove('active');
     });
     const links = document.querySelectorAll('nav a');
-    const map = { 'home': 0, 'chi-sono': 1, 'calcolatore': 2, 'galleria': 3 };
+    const map = { 'home': 0, 'chi-sono': 1, 'galleria': 2 };
     if (map[id] !== undefined) links[map[id]].classList.add('active');
+}
+
+function apriCalcolatore() {
+    document.getElementById('fullscreenCalcolatore').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function chiudiCalcolatore() {
+    document.getElementById('fullscreenCalcolatore').classList.remove('active');
+    document.body.style.overflow = '';
 }
 </script>
 
