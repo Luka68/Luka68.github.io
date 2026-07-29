@@ -18,7 +18,7 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {        body {
+        body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
@@ -47,7 +47,6 @@
         .topbar, .wrap, .fullscreen-page {
             position: relative;
             z-index: 1;
-        }
         }
 
         /* TOP BAR */
@@ -311,18 +310,15 @@
 
 <script>
 function mostraPagina(id) {
-    // Nascondi tutte le pagine
     document.querySelectorAll('.page').forEach(function(el) {
         el.classList.remove('active');
     });
     document.getElementById(id).classList.add('active');
 
-    // Rimuovi active da tutti i link
     document.querySelectorAll('nav a').forEach(function(el) {
         el.classList.remove('active');
     });
 
-    // Aggiungi active al link corrispondente
     const linkMap = {
         'home': 'nav-home',
         'chi-sono': 'nav-chi-sono',
@@ -343,7 +339,6 @@ function chiudiCalcolatore() {
     document.body.style.overflow = '';
 }
 
-// Al caricamento, assicurati che Home sia attiva
 document.addEventListener('DOMContentLoaded', function() {
     mostraPagina('home');
 });
