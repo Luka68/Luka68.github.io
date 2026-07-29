@@ -5,13 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il mio sito personale</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        nav {
+            background-color: #0366d6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #0250a4;
+        }
+        .page {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
         h1 { color: #0366d6; }
+        .hidden { display: none; }
+        .active { display: block; }
     </style>
 </head>
 <body>
-    <h1>Ciao, sono Luka68 👋</h1>
-    <p>Benvenuto nel mio nuovo sito personale, creato con GitHub Pages.</p>
-    <p>La mia pagina GitHub: <a href="https://github.com/Luka68">@Luka68</a></p>
+
+    <nav>
+        <a href="#" onclick="mostraPagina('home')">🏠 Home</a>
+        <a href="#" onclick="mostraPagina('chi-sono')">👤 Chi sono</a>
+        <a href="#" onclick="mostraPagina('calcolatore')">🔧 Calcolatore CNC</a>
+        <a href="#" onclick="mostraPagina('galleria')">🖼️ Galleria</a>
+    </nav>
+
+    <div class="page">
+        <!-- HOME -->
+        <div id="home" class="active">
+            <h1>Benvenuto nel mio sito! 👋</h1>
+            <p>Ciao, sono Luka68. Questo è il mio spazio personale dove condivido i miei progetti.</p>
+            <p>Esplora le sezioni usando il menu qui sopra.</p>
+        </div>
+
+        <!-- CHI SONO -->
+        <div id="chi-sono" class="hidden">
+            <h1>Chi sono</h1>
+            <p>Ciao! Sono Luka68 e mi appassiona la tecnologia, la meccanica e la programmazione.</p>
+            <p>Lavoro nel settore della lavorazione CNC e mi piace creare progetti da zero.</p>
+            <p>Su questa pagina condivido le mie esperienze e i miei lavori.</p>
+            <p>📧 La mia email: lfavaret@gmail.com</p>
+        </div>
+
+        <!-- CALCOLATORE CNC -->
+        <div id="calcolatore" class="hidden">
+            <h1>Calcolatore CNC</h1>
+            <p>In questa sezione inserirò strumenti utili per il calcolo dei parametri di lavorazione CNC.</p>
+            <p>📌 Prossimamente: calcolatore di velocità di taglio, avanzamento e potenza.</p>
+            <p>Se hai suggerimenti, fammelo sapere!</p>
+        </div>
+
+        <!-- GALLERIA -->
+        <div id="galleria" class="hidden">
+            <h1>Galleria</h1>
+            <p>Qui caricherò foto e video dei miei progetti CNC e delle mie creazioni.</p>
+            <p>🖼️ Presto online: immagini di pezzi lavorati, macchinari e progetti in corso.</p>
+            <p>Torna a trovarci per vedere gli aggiornamenti!</p>
+        </div>
+    </div>
+
+    <script>
+        function mostraPagina(id) {
+            // Nascondi tutte le pagine
+            document.querySelectorAll('.page > div').forEach(function(el) {
+                el.classList.remove('active');
+                el.classList.add('hidden');
+            });
+            // Mostra la pagina selezionata
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
